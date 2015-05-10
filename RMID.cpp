@@ -1,61 +1,80 @@
-
-//
-//  Created by Rohan on 30/08/14.
-//  Copyright (c) 2014 Rohan. All rights reserved.
-//
-
 #include <math.h>
 #include <iostream>
-
+#include <vector>
+#include <string.h>
 #include <sstream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cmath>
+#include <list>
+#include <stack>
+#include <map>
+#include <set>
+#include <algorithm>
+
+
 
 using namespace std;
 
 
 
-int main(){
+
+int main()
+{
     
-    int tc;
-    cin>>tc;
-    for(int i=0;i<tc;i++){
-        int h,w;
-        cin>>h>>w;
+    
+    std::list<int>lst;
+    std::list<int>::iterator it;
+    std::list<int>::iterator tail;
+    std::list<int>::iterator dum;
+    
+    int cnt=0;
+    int in;
+    while(scanf("%d",&in)!=EOF){
         
-        int x[110][110];
-        
-        
-        for(int i=0;i<h;i++){
+        if(in!=-1 && in!=0){
             
-            for(int j=0;j<w;j++){
-                
-                cin>>x[i][j];
-                
+            cnt++;
+            
+            if(lst.size()==0){
+                lst.push_back(in);
+                tail=lst.begin();
+                ++tail;
             }
+            else {
+                
+                lst.insert(tail, in);
+            }
+            
+            
+            if(cnt==1)it=lst.begin();
+            else if(cnt%2!=0)++it;
+            
+            //dum=tail;
+            //--dum;
+            //cout<<"tail="<<*dum<<"  median="<<*it<<endl;
+            
         }
         
-        int dp[110][110];
-        
-        for(int i=0;i<w;i++)dp[0][i]=x[0][i];
-        for(int i=0;i<h;i++)dp[i][w]=0;
-        
-        
-        for(int i=1;i<h;i++){
+        else if(in==-1){
+            printf("%d",*it);
+            printf("\n");
+            cnt--;
+            it=lst.erase(it);
+            if(cnt%2==0)--it;
+            //dum=tail;
+            //--dum;
+            //cout<<"tail="<<*dum<<"  median="<<*it<<endl;
             
-            for(int j=0;j<w;j++){
-                if(j>0)
-                    dp[i][j]= x[i][j] + max(dp[i-1][j], max(dp[i-1][j-1], dp[i-1][j+1]));
-                else dp[i][j]= x[i][j] + max(dp[i-1][j], dp[i-1][j+1]);
-                
-            }
         }
         
         
-        int maxdp=0;
-        for(int i=0;i<w;i++)maxdp=max(maxdp, dp[h-1][i]);
+        else {
+            cnt=0;
+            tail=lst.begin();
+            printf("\n");
+        }
         
-        
-        cout<<maxdp<<endl;
     }
+    
 }
